@@ -5,9 +5,50 @@
 
 #include "../../include/http/response.h"
 
-void serve_client(int client_fd)
+// private
+
+// Find the  handler
+void execute_handler(Request req, int client_fd)
 {
-    send_file("www/index.html", client_fd);
+    switch (req.method)
+    {
+    case GET:
+        for (int i = 0; i < routeTable.get_routes.route_count; i++)
+        {
+            if (strcmp(routeTable.get_routes.routes[i].path, req.end_point) == 0)
+            {
+                routeTable.get_routes.routes[i].handler(client_fd);
+            }
+        }
+        break;
+    case POST:
+        for (int i = 0; i < routeTable.post_routes.route_count; i++)
+        {
+            if (strcmp(routeTable.post_routes.routes[i].path, req.end_point) == 0)
+            {
+                routeTable.post_routes.routes[i].handler(client_fd);
+            }
+            break;
+        }
+    default:
+        break;
+    }
+}
+
+// =======================================================
+// =======================PUBLIC=======================
+// =======================================================
+
+void serve_client(int client_fd, Request req)
+{
+    execute_handler(req, client_fd);
+    // If no route matched
+    send_404(client_fd);
+}
+
+void send_404(int client_fd)
+{
+    send_file("www/404.html", client_fd);
 }
 
 void send_file(char *file_path, int client_fd)

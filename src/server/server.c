@@ -13,6 +13,7 @@
 #include "../../include/http/parser.h"
 #include "../../include/http/response.h"
 #include "../../include/common/cli_style.h"
+#include "../../include/http/route.h"
 
 // Structure to pass data to the thread
 typedef struct
@@ -117,7 +118,7 @@ void manage_client_request(int client_fd)
         printf("\nend point:%s\n", req.end_point);
 
     // Serve the client
-    serve_client(client_fd);
+    serve_client(client_fd, req);
 
     // End connection with the client
     close(client_fd);

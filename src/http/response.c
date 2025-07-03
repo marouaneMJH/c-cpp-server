@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 #include "../../include/http/response.h"
+#include "../../include/common/cli_style.h"
 
 // private
 
@@ -17,7 +18,7 @@ void execute_handler(Request req, int client_fd)
         {
             if (strcmp(routeTable.get_routes.routes[i].path, req.end_point) == 0)
             {
-                routeTable.get_routes.routes[i].handler(client_fd);
+                routeTable.get_routes.routes[i].handler(client_fd, &req);
             }
         }
         break;
@@ -26,11 +27,12 @@ void execute_handler(Request req, int client_fd)
         {
             if (strcmp(routeTable.post_routes.routes[i].path, req.end_point) == 0)
             {
-                routeTable.post_routes.routes[i].handler(client_fd);
+                routeTable.post_routes.routes[i].handler(client_fd, &req);
             }
-            break;
         }
+        break;
     default:
+        printf(FG_RED "handler not found for the %d\n" RESET, client_fd);
         break;
     }
 }

@@ -1,12 +1,11 @@
-#include <sys/socket.h>
 #include <stdio.h>
-#include "./../includes/socket_setup.h"
+#include <sys/socket.h>
 
-int main()
+#include "../include/server/server.h"
+
+int main(void)
 {
-
     socket_tcp();
-    printf("Hello world\n");
 
     return 0;
 }

@@ -66,3 +66,7 @@ ROUTE_GET("/integral", {
     sprintf(json, "{'methodName':'simpson', 'result':%f, 'time':%f}", result, cpu_time_used);
     send_json(json, client_fd);
 })
+
+ROUTE_GET("/500", {
+    send_file("www/500.html", client_fd);
+})

@@ -114,9 +114,6 @@ void manage_client_request(int client_fd)
 {
     Request req = read_request(client_fd);
 
-    if (req.end_point)
-        printf("\nend point:%s\n", req.end_point);
-
     // Serve the client
     serve_client(client_fd, req);
 
@@ -136,8 +133,8 @@ int accept_client_connection(int server_fd)
         exit(EXIT_FAILURE);
     }
 
-    printf(FG_CYAN "[+]" RESET " Client connected: %s:%d\n",
-           inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
+    printf(FG_CYAN "[+]" RESET " Client connected.\n");
+    //    inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
 
     return client_fd;
 }

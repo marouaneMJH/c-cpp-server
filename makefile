@@ -1,7 +1,7 @@
 # File: Makefile
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -pedantic
-LDFLAGS = -pthread
+LDFLAGS = -pthread -lm
 TARGET = build/server
 SRC_DIR = src
 INC_DIR = include

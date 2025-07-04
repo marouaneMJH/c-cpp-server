@@ -11,9 +11,9 @@
  */
 void send_file(char *file_path, int client_fd);
 
-const char *get_mime_type(const char *filename);
-
 void send_files(const char **file_paths, int path_count, int client_fd);
+
+void send_json(const char *json, int client_fd);
 
 void send_404(int client_fd);
 

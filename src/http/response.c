@@ -7,7 +7,7 @@
 #include "../../include/common/cli_style.h"
 
 // Find the  handler
-void execute_handler(Request req, int client_fd)
+static void execute_handler(Request req, int client_fd)
 {
     switch (req.method)
     {
@@ -16,10 +16,7 @@ void execute_handler(Request req, int client_fd)
         {
             if (strcmp(routeTable.get_routes.routes[i].path, req.end_point) == 0)
             {
-                printf(FG_BLUE "\nRunning handler for  %d...." RESET, client_fd);
                 routeTable.get_routes.routes[i].handler(client_fd, &req);
-                // debug tracing
-                printf("\nRunning handler for%d " FG_GREEN "DONE\n" RESET, client_fd);
                 break;
             }
         }
@@ -40,6 +37,28 @@ void execute_handler(Request req, int client_fd)
     }
 }
 
+static char *get_mime_type(const char *filename)
+{
+    const char *ext = strrchr(filename, '.');
+    if (!ext)
+        return "application/octet-stream";
+
+    if (strcmp(ext, ".html") == 0)
+        return "text/html";
+    if (strcmp(ext, ".css") == 0)
+        return "text/css";
+    if (strcmp(ext, ".js") == 0)
+        return "application/javascript";
+    if (strcmp(ext, ".png") == 0)
+        return "image/png";
+    if (strcmp(ext, ".jpg") == 0 || strcmp(ext, ".jpeg") == 0)
+        return "image/jpeg";
+    if (strcmp(ext, ".svg") == 0)
+        return "image/svg+xml";
+
+    return "application/octet-stream";
+}
+
 // =======================================================
 // =======================PUBLIC=======================
 // =======================================================
@@ -54,6 +73,11 @@ void serve_client(int client_fd, Request req)
 void send_404(int client_fd)
 {
     send_file("www/404.html", client_fd);
+}
+
+void send_500(int client_fd)
+{
+    send_file("www/500.html", client_fd);
 }
 
 void send_file(char *file_path, int client_fd)
@@ -83,32 +107,39 @@ void send_file(char *file_path, int client_fd)
             file_size);
 
     write(client_fd, header, strlen(header));
+
     write(client_fd, file_content, file_size);
 
     free(file_content);
 }
 
-const char *get_mime_type(const char *filename)
+// json
+
+void send_json(const char *json, int client_fd)
 {
-    const char *ext = strrchr(filename, '.');
-    if (!ext)
-        return "application/octet-stream";
+    if (!json)
+    {
+        send_500(client_fd);
+        return;
+    }
 
-    if (strcmp(ext, ".html") == 0)
-        return "text/html";
-    if (strcmp(ext, ".css") == 0)
-        return "text/css";
-    if (strcmp(ext, ".js") == 0)
-        return "application/javascript";
-    if (strcmp(ext, ".png") == 0)
-        return "image/png";
-    if (strcmp(ext, ".jpg") == 0 || strcmp(ext, ".jpeg") == 0)
-        return "image/jpeg";
-    if (strcmp(ext, ".svg") == 0)
-        return "image/svg+xml";
+    char header[512];
 
-    return "application/octet-stream";
+    sprintf(header,
+            "HTTP/1.1 200 OK\r\n"
+            "Content-Type: text/json\r\n"
+            "Content-Length: %ld\r\n"
+            "Connection: close\r\n\r\n",
+            strlen(json));
+
+    write(client_fd, header, strlen(header));
+    write(client_fd, json, strlen(json));
 }
+
+// redirect
+// status
+// response forms
+// cockier
 
 /*BUG not working cuz the http not support multi files*/
 void send_files(const char **file_paths, int path_count, int client_fd)

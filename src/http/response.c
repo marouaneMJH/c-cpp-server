@@ -83,3 +83,49 @@ void send_file(char *file_path, int client_fd)
 
     free(file_content);
 }
+
+void send_files(const char **file_paths, int path_count, int client_fd)
+{
+    FILE *fp = NULL;
+    int i;
+
+    // Try to open each file in the list until one is found
+    for (i = 0; i < path_count; i++)
+    {
+        if (file_paths[i])
+        {
+            fp = fopen(file_paths[i], "rb");
+            if (fp)
+                break;
+        }
+    }
+
+    // If no file was found, serve 404
+    if (!fp)
+    {
+        send_file("www/404.html", client_fd);
+        return;
+    }
+
+    fseek(fp, 0, SEEK_END);
+    long file_size = ftell(fp);
+    rewind(fp);
+
+    char *file_content = malloc(file_size);
+    fread(file_content, 1, file_size, fp);
+    fclose(fp);
+
+    char header[512];
+
+    sprintf(header,
+            "HTTP/1.1 200 OK\r\n"
+            "Content-Type: text/html\r\n"
+            "Content-Length: %ld\r\n"
+            "Connection: close\r\n\r\n",
+            file_size);
+
+    write(client_fd, header, strlen(header));
+    write(client_fd, file_content, file_size);
+
+    free(file_content);
+}

@@ -15,6 +15,7 @@ void app_get(const char *path, RouteHandler handler)
         routeTable.get_routes.route_count++;
 
         printf("\n%s added to the path.\n", path);
+        fflush(stdout);
     }
 }
 

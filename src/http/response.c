@@ -6,8 +6,6 @@
 #include "../../include/http/response.h"
 #include "../../include/common/cli_style.h"
 
-// private
-
 // Find the  handler
 void execute_handler(Request req, int client_fd)
 {
@@ -18,7 +16,11 @@ void execute_handler(Request req, int client_fd)
         {
             if (strcmp(routeTable.get_routes.routes[i].path, req.end_point) == 0)
             {
+                printf(FG_BLUE "\nRunning handler for  %d...." RESET, client_fd);
                 routeTable.get_routes.routes[i].handler(client_fd, &req);
+                // debug tracing
+                printf("\nRunning handler for%d " FG_GREEN "DONE\n" RESET, client_fd);
+                break;
             }
         }
         break;
@@ -28,6 +30,7 @@ void execute_handler(Request req, int client_fd)
             if (strcmp(routeTable.post_routes.routes[i].path, req.end_point) == 0)
             {
                 routeTable.post_routes.routes[i].handler(client_fd, &req);
+                break;
             }
         }
         break;
@@ -58,7 +61,7 @@ void send_file(char *file_path, int client_fd)
     FILE *fp = fopen(file_path ? file_path : "www/index.html", "rb");
     if (!fp)
     {
-        send_file("www/404.html", client_fd);
+        send_404(client_fd);
     }
 
     fseek(fp, 0, SEEK_END);

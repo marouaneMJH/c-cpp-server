@@ -1,6 +1,8 @@
 #include "./../../include/http/route.h"
+#include "./../../include/common/cli_style.h"
 #include <string.h>
 #include <stdio.h>
+
 // Define the global routeTable
 RouteTable routeTable;
 
@@ -13,10 +15,12 @@ void app_get(const char *path, RouteHandler handler)
         strcpy(routeTable.get_routes.routes[routeTable.get_routes.route_count].path, path);
         routeTable.get_routes.routes[routeTable.get_routes.route_count].handler = handler;
         routeTable.get_routes.route_count++;
-
-        printf("\n%s added to the path.\n", path);
-        fflush(stdout);
+        return;
     }
+
+    printf("\n%s not added to the path.\n", path);
+    fflush(stdout);
+    return;
 }
 
 void app_post(const char *path, RouteHandler handler)

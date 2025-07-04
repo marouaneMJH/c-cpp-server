@@ -3,37 +3,43 @@
 void handle_index(int client_fd, Request *req)
 {
     (void)req;
-    send_file("www/public/index.html", client_fd);
+    send_file("www/index.html", client_fd);
 }
 
 void handle_style(int client_fd, Request *req)
 {
     (void)req;
 
-    send_file("www/public/styles.css", client_fd);
+    send_file("www/styles.css", client_fd);
 }
 
 void handle_404(int client_fd, Request *req)
 {
     (void)req;
 
-    send_file("www/public/404.html", client_fd);
+    send_file("www/404.html", client_fd);
 }
 
 void handle_about(int client_fd, Request *req)
 {
     (void)req;
-    send_file("www/public/about.html", client_fd);
+    send_file("www/about.html", client_fd);
 }
 
 void handle_project(int client_fd, Request *req)
 {
     (void)req;
-    send_file("www/public/project.html", client_fd);
+    send_file("www/project.html", client_fd);
 }
 
 void handle_favicon(int client_fd, Request *req)
 {
     (void)req;
-    send_file("www/public/favicon.ico", client_fd);
+    send_file("www/favicon.ico", client_fd);
+}
+
+void handle_image(int client_fd, Request *req)
+{
+    (void)req;
+    send_file("www/images/image.png", client_fd);
 }

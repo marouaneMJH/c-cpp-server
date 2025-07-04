@@ -2,19 +2,7 @@
 #define ROUTE
 
 #include "parser.h"
-
-// MACROS
-#define ROUTE_GET(path, body)                                               \
-    static void __handler_##__LINE__(int client_fd, Request *req)           \
-    {                                                                       \
-        (void)req; /* prevents unused warning */                            \
-        body                                                                \
-    }                                                                       \
-    static void __register_route_##__LINE__() __attribute__((constructor)); \
-    static void __register_route_##__LINE__()                               \
-    {                                                                       \
-        app_get(path, __handler_##__LINE__);                                \
-    }
+#include "macros.h"
 
 #define MAX_ROUTES 128
 

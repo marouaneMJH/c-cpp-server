@@ -16,4 +16,5 @@ void handle_project(int client_fd, Request *req);
 
 void handle_favicon(int client_fd, Request *req);
 
+void handle_image(int client_fd, Request *req);
 #endif

@@ -7,12 +7,12 @@
 int main(void)
 {
 
-    // Initial the Route Table
-    routeTable.get_routes.route_count = 0;
-    routeTable.post_routes.route_count = 0;
+    // // Initial the Route Table
+    // routeTable.get_routes.route_count = 0;
+    // routeTable.post_routes.route_count = 0;
 
+    // routes_connects();
     // app routes
-    routes_connects();
 
     socket_tcp();
 

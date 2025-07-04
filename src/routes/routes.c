@@ -1,11 +1,31 @@
 #include "./../../include/routes/routes.h"
+#include <stdio.h>
 
-void routes_connects()
-{
-    app_get("/home", handle_index);
-    app_get("/", handle_index);
-    app_get("/styles.css", handle_style);
-    app_get("/about", handle_about);
-    app_get("/project", handle_project);
-    app_get("/favicon.ico", handle_favicon);
-}
+ROUTE_GET("/image-2", {
+    send_file("www/images/image.png", client_fd);
+};)
+
+ROUTE_GET("/project", {
+    send_file("www/project.html", client_fd);
+})
+
+ROUTE_GET("/about", {
+    // send_file("www/images/image.png", client_fd);
+    handle_about(client_fd, req);
+})
+
+ROUTE_GET("/home", {
+    handle_index(client_fd, req);
+})
+
+ROUTE_GET("/", {
+    handle_index(client_fd, req);
+})
+
+ROUTE_GET("/styles.css", {
+    handle_style(client_fd, req);
+})
+
+ROUTE_GET("/image", {
+    handle_image(client_fd, req);
+})

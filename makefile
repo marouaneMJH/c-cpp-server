@@ -18,6 +18,10 @@ INC = -I$(INC_DIR)
 
 .PHONY: all clean run test
 
+
+
+
+
 all: $(TARGET)
 
 # Create the target executable
@@ -48,3 +52,7 @@ run: $(TARGET)
 clean:
 	rm -rf $(BUILD_DIR)
 	find $(SRC_DIR) -name "*.o" -type f -delete
+
+# Test target (independent of 'all')
+test:
+	bun run test/load.test.ts

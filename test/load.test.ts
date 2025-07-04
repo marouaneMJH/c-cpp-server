@@ -1,6 +1,6 @@
 // File: load-test.ts
 
-const APP_URL = "http://localhost:8080";
+const APP_URL = "http://localhost:8080/";
 const CONCURRENCY = 100000; // Number of parallel requests
 
 async function sendRequest(id: number): Promise<number> {

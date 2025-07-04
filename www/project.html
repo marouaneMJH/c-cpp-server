@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C Server - Project Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">C-Server</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="about">About</a></li>
+                <li><a href="project">Project</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Project Details</h1>
+            <p>Technical information and implementation details of C-Server</p>
+        </section>
+
+        <section class="container">
+            <h2>Architecture Overview</h2>
+            <div class="project-details">
+                <p>C-Server follows a modular architecture with several key components:</p>
+                <div class="feature-card">
+                    <h3>HTTP Parser</h3>
+                    <p>Responsible for parsing incoming HTTP requests, extracting method, headers, and body data.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Routing System</h3>
+                    <p>Maps URLs to handler functions, supporting different HTTP methods like GET and POST.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Response Generator</h3>
+                    <p>Creates HTTP responses with appropriate headers and content.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Socket Server</h3>
+                    <p>Handles TCP connections and request/response cycles.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="container">
+            <h2>Code Structure</h2>
+            <p>The project is organized into several directories:</p>
+            <div class="code-block">
+                <pre>c-server/
+├── include/         # Header files
+│   ├── common/      # Common utilities
+│   ├── http/        # HTTP-related components
+│   └── server/      # Server configuration
+├── src/             # Source code
+│   ├── http/        # HTTP implementation
+│   └── server/      # Server implementation
+├── test/            # Test files
+├── build/           # Compiled binaries
+└── www/             # Web content</pre>
+            </div>
+        </section>
+
+        <section class="container">
+            <h2>Key Features</h2>
+            <ul>
+                <li><strong>Lightweight Core:</strong> Less than 2000 lines of C code for the core functionality</li>
+                <li><strong>HTTP/1.1 Support:</strong> Basic support for the HTTP/1.1 protocol</li>
+                <li><strong>Routing System:</strong> Register handlers for different URL paths</li>
+                <li><strong>Static File Serving:</strong> Serve files from a directory</li>
+                <li><strong>Content Type Detection:</strong> Automatically set appropriate content types</li>
+                <li><strong>Error Handling:</strong> Proper handling of HTTP errors</li>
+            </ul>
+        </section>
+
+        <section class="container">
+            <h2>Example Usage</h2>
+            <p>Here's how you can define routes in your application:</p>
+            <div class="code-block">
+                <pre>// Define a simple route handler for GET /hello
+ROUTE_GET("/hello", {
+    char *response = "Hello, World!";
+    send_response(client_fd, 200, "text/plain", response, strlen(response));
+})
+
+// Define a route handler for POST /echo
+ROUTE_POST("/echo", {
+    // Echo back the request body
+    send_response(client_fd, 200, "text/plain", req->body, req->body_length);
+})</pre>
+            </div>
+        </section>
+
+        <section class="container">
+            <h2>Performance</h2>
+            <p>C-Server is designed to be efficient and lightweight:</p>
+            <ul>
+                <li>Memory usage: Less than 5MB for the server process</li>
+                <li>Can handle hundreds of concurrent connections</li>
+                <li>Fast startup time (less than 50ms)</li>
+                <li>Low latency response time (typically &lt; 1ms for static content)</li>
+            </ul>
+        </section>
+
+        <section class="container">
+            <h2>Future Roadmap</h2>
+            <ul>
+                <li>HTTP/2 support</li>
+                <li>WebSocket protocol integration</li>
+                <li>Configuration file support</li>
+                <li>Improved logging and metrics</li>
+                <li>HTTPS/TLS support</li>
+            </ul>
+            <a href="/" class="btn">Back to Home</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 C-Server Project. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+----- Results Withouts Treads -----
+Total time: 10104.26ms (10.10s)
+Successful requests: 100/100
+Average request time: 0.68ms
+
+
+if(req.endpoint)
+    IO operation
+----- Results -----
+Total time: 16299.21ms
+Successful requests: 13788/100000
+Average request time: 2697.37ms
+
+Withouts endpoint operation
+----- Results -----
+Total time: 33552.28ms
+Successful requests: 99870/100000
+Average request time: 16109.45ms
+
+----- Results -----
+Total time: 89546.99ms
+Successful requests: 100000/100000
+Average request time: 44009.22ms
+
+----- Results -----
+Total time: 35818.27ms
+Successful requests: 100000/100000
+Average request time: 18426.86ms
+
+
